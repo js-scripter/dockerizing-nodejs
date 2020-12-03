@@ -1,0 +1,33 @@
+<h2>New User</h2>
+<form method="POST" action="/users/update">
+{{#if this.data}}   
+  {{#each this.data}}  
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" name="name" value="{{name}}">
+    </div>
+    <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" name="email" value="{{email}}" aria-describedby="emailHelp">
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" value="{{password}}" >
+    </div>
+    <div class="form-group">
+        <label for="twitter_link">Twitter link</label>
+        <input type="text" class="form-control" name="twitter_link" value="{{twitter_link}}" >
+    </div>
+    <div class="form-group">
+        <label for="linkedin_url">Linkedin url</label>
+        <input type="text" class="form-control" name="linkedin_url" value="{{linkedin_url}}" >
+    </div>
+    <div class="form-group">
+        <label for="blog_URL">Blog URL</label>
+        <input type="text" class="form-control" name="blog_URL" value="{{blog_URL}}" >
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="/users/details/{{id}}">Cancel</a>
+   {{/each}}                       
+{{/if}}
+</form>
