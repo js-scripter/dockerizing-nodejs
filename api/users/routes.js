@@ -7,7 +7,7 @@ router.get('/newUserForm', model.newUserForm)
 router.post('/add', model.addUser)
 router.get('/delete/:id',model.deleteUser)
 router.get('/details/:id',model.getUserById)
-router.get('/updateUserForm/:id', model.updateUserForm)
+router.get('/updateform/:id', model.updateForm)
 router.post('/update', model.updateUser)
 
 

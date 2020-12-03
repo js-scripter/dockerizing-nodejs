@@ -1,6 +1,5 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
-// const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3000
 //get migrate module
 const migrate = require('./bin/migrate')
@@ -22,6 +21,7 @@ app.set('view engine', 'hbs');
 app.get('/', (request,response)=>{
     response.redirect('/users');
 }) 
+
 // add router
 app.use('/users', require('./api/users/routes'));
 

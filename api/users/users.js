@@ -15,15 +15,18 @@ const newUserForm = async(request,response)=>{
     response.render('users/newUserForm');
 }
 
-const updateUserForm = async(request,response)=>{
+const updateForm = async(request,response)=>{
     const id = parseInt(request.params.id)
+    console.log(id)
     knex('users')
     .where('id', id)
     .then(result=>{
         // response.json(result)
         console.log('in update user form')
         console.log(result)
-        response.render('users/updateUserForm',{data:result})
+        // result['idField']=id;
+
+        response.render('users/updateForm',{data:result})
     })
     .catch(error=>{
         // response.status(500)
@@ -74,12 +77,14 @@ const updateUser = (request, response) => {
     const id = request.body.id
     console.log(request.body)
     const name = request.body.name
+    delete(request.body.id);
     console.log(name)
     knex('users')
     .where({ id: id })
-    .update({ name: name}, ['id', 'name'])
+    .update(request.body, ['id', 'name'])
     .then(result=>{
-        response.send('updated name = '+name + ' for id= '+id)
+        // response.send('updated name = '+name + ' for id= '+id)
+        response.redirect('/users/details/'+id)
     })
     .catch(error=>{
         // response.status(500)
@@ -111,5 +116,5 @@ module.exports = {
     getUserById,
     updateUser,
     newUserForm,
-    updateUserForm
+    updateForm
 }
