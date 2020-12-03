@@ -36,6 +36,3 @@ migrate.addUsersTable()
     console.log(error)
     console.log('Migration failed hence server can not be started')
 });
-// app.listen(PORT, () => {
-//     console.log(`The web server has started on port ${PORT}`);
-// });
