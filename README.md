@@ -49,10 +49,10 @@ Now you are done with database part. Let's move on to Node server part as shown 
 -	Run the command - `sudo docker build -t node_image .` Once the script finish you get  confirmation as follows
 >Successfully built 028dab5f68fe Successfully tagged node_image:latest
 
--	Start Docker container for Node application in new terminal as shown below
+-	Start Docker container for Node application in new terminal by running below command.
 >sudo docker run --publish 8000:8080 --env dbuser=postgres --env dbhost=database --env database=ums --env dbpassword=pg --env dbport=5432 --name=node_container --link=pg_container:database --interactive node_image /bin/bash
 
--	In new terminal run the command as shown below
+-	In new terminal window/tab run the command as shown below
 >sudo docker exec -it node_container node /usr/src/app/app.js
 
 -	Now open the application in browser `http://localhost:8000/`
