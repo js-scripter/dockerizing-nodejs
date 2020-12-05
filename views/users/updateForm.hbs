@@ -1,4 +1,4 @@
-<h2>New User</h2>
+<h2>Update User</h2>
 <form method="POST" action="/users/update">
 {{#if this.data}}   
   {{#each this.data}} 
@@ -28,7 +28,7 @@
     </div>
     <div class="form-group">
         <label for="blog_URL">Blog URL</label>
-        <input type="text" class="form-control" name="blog_URL" value="{{blog_URL}}" >
+        <input type="text" class="form-control" name="blog_url" value="{{blog_url}}" >
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
     <a href="/users/details/{{id}}">Cancel</a>
