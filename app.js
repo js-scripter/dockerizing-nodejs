@@ -1,8 +1,20 @@
 //get express app to create server
 const express = require('express');
 
+//use session and cookies for tracking users
+const session = require('express-session');
+
+//cookie parser
+const cookieParser = require('cookie-parser');
+
+//for logging
+var morgan = require('morgan');
+
 //handle bars templating engine
 const exphbs = require('express-handlebars');
+
+//knex
+const knex = require('./knex-db/knex-orm')
 
 //get db creation module
 // const createDb = require('./bin/createdb')
@@ -22,6 +34,24 @@ app.use(express.json());
 //parse the body of request object when HTML form is submitted
 app.use(express.urlencoded({extended:true,}))
 
+// set morgan to log info about our requests for development use.
+app.use(morgan('dev'));
+
+
+// initialize cookie-parser to allow us access the cookies stored in the browser. 
+app.use(cookieParser());
+
+// initialize express-session to allow us track the logged-in user across sessions.
+app.use(session({
+    key: 'user_sid',
+    secret: 'somerandonstuffs',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 600000
+    }
+}));
+
 
 //set view engine to handlebar and use short extention like .hbs for handlebars
 app.engine('hbs', exphbs({
@@ -32,40 +62,27 @@ app.set('view engine', 'hbs');
 
 
 //health check API endpoint
-app.get('/health', function (req, res) {
-  res.status(200).json({
+app.get('/health', function (request, response) {
+  response.status(200).json({
     status: 'OK'
   });
 });
 
 //add root route
 app.get('/', (request,response)=>{
-    response.redirect('/users');
+    response.render('home');
 }) 
+
+
+//add authentication routes
+app.use('/auth', require('./api/auth/routes'))
+
 
 // add users router to manage CRUD operations of users entity
 app.use('/users', require('./api/users/routes'));
 
 
-//below code is commented for time being later on this feature can be added
-//run createDb and users table migration before starting web server 
-// createDb.create((status)=>{
-// 	if(status==true){
-// 		console.log('DB ready');
-// 		tablesMigrate.addUsersTable(function(status){
-// 			if(status==true){
-// 				console.log('users table ready')
-// 				app.listen(PORT, () => {
-// 				    console.log(`The web server has started on port ${PORT}`);
-// 				});
-// 			}
-// 		})
-
-// 	}else{
-// 		console.log('Problem connecting to DB')
-// 	}
-// })
-
+//start app
 app.listen(PORT, () => {
     console.log(`visit http://localhost:8000/`);
 });
